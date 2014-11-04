@@ -21,5 +21,6 @@
   :flight_log => true,
 },
 :selected_aircraft_name => "Generic",  # aircrafts are defined in "servo_settings.rb"
+:baud_rate => 57600, # Baud Rate of COM port
 
 }

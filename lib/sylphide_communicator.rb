@@ -34,6 +34,10 @@ module Mv
       @properties[:system_time] = 0
       @properties[:servo_out] = Array.new(N_SERVO_OUT_CH, 0)
       @properties[:servo_in] = Array.new(N_SERVO_IN_CH, 0)
+      @properties[:air_speed] = 0
+      @properties[:air_alpha] = 0
+      @properties[:air_beta] = 0
+      @properties[:air_alt] = 0
 
       @history = []
       @properties.add_listener(:all){|changed|
@@ -128,6 +132,24 @@ module Mv
         @properties.set_changed :servo_in
       when SylphideProcessor::PPacketObserver
         increment_packet_count :p
+        dat = [0,0,0,0]
+        dat[0] = observer.values.air_speed[0]
+        dat[1] = observer.values.air_alpha[0]
+        dat[2] = observer.values.air_beta[0]
+        dat[3] = observer.values.air_speed[1] 
+        #unsigned short -> integer
+        dat.map!{|d|
+          if d > 32767
+            d - 65536
+          else
+            d
+          end
+        } 
+        @properties[:air_speed] = dat[0] / 10.0 
+        @properties[:air_alpha] = dat[1] / 10.0
+        @properties[:air_beta] = dat[2] / 10.0
+        @properties[:air_alt] = -dat[3] / 100.0
+        
       when SylphideProcessor::NPacketObserver
         increment_packet_count :n
         navdata = observer.navdata

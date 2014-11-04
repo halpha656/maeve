@@ -12,10 +12,10 @@ module Mv
         on_paint @frame.memdc
         @frame.update
       }
-      THE_APP.com(0).add_property_listener(:velocity){
+      THE_APP.com(0).add_property_listener(:air_speed){ #air speed
         @frame.refresh false,nil
       }
-      @drawer = SingleNeedleIndicatorDrawer.new :n_marker=>10, :step_marker=>10, :unit_text=>"m/s"
+      @drawer = SingleNeedleIndicatorDrawer.new :n_marker=>10, :step_marker=>10, :unit_text=>"IAS m/s"
       @back_brush = Wx::Brush.new(Wx::Colour.new(0,0,0))
     end
     def on_paint dc
@@ -25,7 +25,8 @@ module Mv
       com = THE_APP.com(0)
       width = @frame.size.width
       height = @frame.size.height
-      velocity = com[:velocity].r
+      #velocity = com[:velocity].r #ground speed
+      velocity = com[:air_speed] #air speed
       @drawer.draw dc, width, height, velocity
     end
   end

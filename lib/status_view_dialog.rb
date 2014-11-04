@@ -34,7 +34,8 @@ module Mv
 	      "servo_in   = " + com[:servo_in].map{|x| x.to_s}.join(', ') + "\n" +
 	      "servo_out = " + com[:servo_out].map{|x| x.to_s}.join(', ') + "\n" + 
 #				"alrn, elvt, rudr, thrtl = " + ['ail','elv','rud','thr'].map{|dev| ServoView.percent(dev).to_s}.inject(){|r, x|r + ", " + x}
-				"alrn, elvt, rudr, thrtl = " + ['ail','elv','rud'].map{|dev| (ServoView.rad(dev)*100).to_i.to_s}.join(', ') + ", " + ServoView.percent('thr').to_s
+				"alrn, elvt, rudr, thrtl = " + ['ail','elv','rud'].map{|dev| (ServoView.rad(dev)*100).to_i.to_s}.join(', ') + ", " + ServoView.percent('thr').to_s + "\n" +
+        "airspeed = #{com[:air_speed]}, alpha = #{com[:air_alpha]}, beta = #{com[:air_beta]}, air_alt = #{com[:air_alt]}"
     end
   end
 end
