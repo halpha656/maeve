@@ -32,7 +32,7 @@ module Mv
         on_paint @frame.memdc
         @frame.update
       }
-      THE_APP.com(0).add_property_listener(:altitude){
+      THE_APP.com(0).add_property_listener(:air_alt){
         @frame.refresh false,nil
       }
 			default_cf = {:hist_on=>false, :hist_span=>60, :hist_vertical_range=>[0,50,200]}
@@ -64,10 +64,10 @@ module Mv
       width = @frame.size.width
       height = @frame.size.height
       if @history_on
-				@history_holder.push :t=>com[:itow], :alt=>com[:altitude]
+				@history_holder.push :t=>com[:itow], :alt=>com[:air_alt]
 	      @history_holder.draw dc, width, height
       end
-      @drawer.draw dc, width, height, com[:altitude]
+      @drawer.draw dc, width, height, com[:air_alt]
     end
   end
 end
